@@ -9,30 +9,39 @@ class smx {
     private static $config = null;
     
     /**
-     * Wczytaj konfigurację z pliku lub użyj domyślnej
+     * Wczytaj konfigurację z pliku .env
      */
     private static function getConfig() {
         if (self::$config !== null) {
             return self::$config;
         }
         
-        // Spróbuj wczytać z db_config.php
-        $configFile = __DIR__ . '/db_config.php';
-        if (file_exists($configFile)) {
-            self::$config = require $configFile;
-        } else {
-            // Domyślna konfiguracja
-            self::$config = [
-                'host' => 'localhost',
-                'username' => 'root',
-                'password' => '_AGMQ8@YyOLa',
-                'database' => 'partacz_fishing',
-                'port' => 3306,
-                'charset' => 'utf8mb4'
-            ];
+        // Załaduj zmienne z .env
+        $envFile = __DIR__ . '/.env';
+        if (!file_exists($envFile)) {
+            error_log('BŁĄD KRYTYCZNY: Plik .env nie istnieje! Skopiuj .env.example do .env i uzupełnij dane.');
+            die('Błąd konfiguracji: Brak pliku .env. Zobacz README_ENV.md');
         }
         
-        return self::$config;
+        require_once __DIR__ . '/DotEnv.php';
+        try {
+            $dotenv = new DotEnv($envFile);
+            $dotenv->load();
+            
+            self::$config = [
+                'host' => env('DB_HOST', 'localhost'),
+                'username' => env('DB_USERNAME', 'root'),
+                'password' => env('DB_PASSWORD', ''),
+                'database' => env('DB_DATABASE', 'partacz_fishing'),
+                'port' => env('DB_PORT', 3306),
+                'charset' => env('DB_CHARSET', 'utf8mb4')
+            ];
+            
+            return self::$config;
+        } catch (Exception $e) {
+            error_log('Błąd ładowania .env: ' . $e->getMessage());
+            die('Błąd konfiguracji: Nie można załadować pliku .env. Zobacz README_ENV.md');
+        }
     }
     
     /**

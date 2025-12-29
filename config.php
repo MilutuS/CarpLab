@@ -293,20 +293,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 mkdir($backupDir, 0777, true);
             }
             
-            // Pobierz konfigurację bazy danych
-            $dbConfig = [
-                'host' => 'localhost',
-                'username' => 'root',
-                'password' => '',
-                'database' => 'partacz_fishing',
-                'port' => '3306'
-            ];
+            // Pobierz konfigurację bazy danych z .env
+            $envFile = __DIR__ . '/.env';
             
-            // Sprawdź czy istnieje db_config.php
-            $configFile = __DIR__ . '/db_config.php';
-            if (file_exists($configFile)) {
-                $customConfig = require $configFile;
-                $dbConfig = array_merge($dbConfig, $customConfig);
+            if (!file_exists($envFile)) {
+                error_log('BŁĄD: Plik .env nie istnieje podczas tworzenia backupu');
+                if (ob_get_length()) ob_clean();
+                echo json_encode(['success' => false, 'error' => 'Brak pliku .env. Zobacz README_ENV.md']);
+                exit;
+            }
+            
+            require_once __DIR__ . '/DotEnv.php';
+            try {
+                $dotenv = new DotEnv($envFile);
+                $dotenv->load();
+                
+                $dbConfig = [
+                    'host' => env('DB_HOST', 'localhost'),
+                    'username' => env('DB_USERNAME', 'root'),
+                    'password' => env('DB_PASSWORD', ''),
+                    'database' => env('DB_DATABASE', 'partacz_fishing'),
+                    'port' => env('DB_PORT', '3306')
+                ];
+            } catch (Exception $e) {
+                error_log('Błąd ładowania .env dla backupu: ' . $e->getMessage());
+                if (ob_get_length()) ob_clean();
+                echo json_encode(['success' => false, 'error' => 'Błąd konfiguracji: ' . $e->getMessage()]);
+                exit;
             }
             
             $filename = "backup_{$timestamp}.sql";
@@ -1409,20 +1422,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 exit;
             }
             
-            // Pobierz konfigurację bazy danych
-            $dbConfig = [
-                'host' => 'localhost',
-                'username' => 'root',
-                'password' => '',
-                'database' => 'partacz_fishing',
-                'port' => '3306'
-            ];
+            // Pobierz konfigurację bazy danych z .env
+            $envFile = __DIR__ . '/.env';
             
-            // Sprawdź czy istnieje db_config.php
-            $configFile = __DIR__ . '/db_config.php';
-            if (file_exists($configFile)) {
-                $customConfig = require $configFile;
-                $dbConfig = array_merge($dbConfig, $customConfig);
+            if (!file_exists($envFile)) {
+                error_log('BŁĄD: Plik .env nie istnieje podczas przywracania backupu');
+                if (ob_get_length()) ob_clean();
+                echo json_encode(['success' => false, 'error' => 'Brak pliku .env. Zobacz README_ENV.md']);
+                exit;
+            }
+            
+            require_once __DIR__ . '/DotEnv.php';
+            try {
+                $dotenv = new DotEnv($envFile);
+                $dotenv->load();
+                
+                $dbConfig = [
+                    'host' => env('DB_HOST', 'localhost'),
+                    'username' => env('DB_USERNAME', 'root'),
+                    'password' => env('DB_PASSWORD', ''),
+                    'database' => env('DB_DATABASE', 'partacz_fishing'),
+                    'port' => env('DB_PORT', '3306')
+                ];
+            } catch (Exception $e) {
+                error_log('Błąd ładowania .env dla przywracania: ' . $e->getMessage());
+                if (ob_get_length()) ob_clean();
+                echo json_encode(['success' => false, 'error' => 'Błąd konfiguracji: ' . $e->getMessage()]);
+                exit;
             }
             
             // Wykryj system operacyjny i znajdź mysql

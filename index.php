@@ -209,7 +209,7 @@
             <div class="tab-pane fade" id="products">
                 <div class="page-header d-flex justify-content-between align-items-end">
                     <div>
-                        <h1 class="page-title">Moja Spiżarnia</h1>
+                        <h1 class="page-title">Moja Spiżarniaa</h1>
                         <p class="page-subtitle">Zarządzaj składnikami do Twoich kulek</p>
                     </div>
                 </div>
