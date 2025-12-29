@@ -3,5 +3,6 @@
 /backups
 /data
 php_errors.log
-/uploads
+/uploads/product_*
+/uploads/recipe*
 .env
