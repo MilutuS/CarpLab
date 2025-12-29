@@ -1,7 +1,7 @@
 .env
 .vscode/sftp.json
-/backups
-/data
 php_errors.log
-/uploads
+/uploads/product_*
+/uploads/recipe*
+/backups/backup_*
 .env
