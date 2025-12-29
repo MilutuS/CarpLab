@@ -312,7 +312,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'host' => env('DB_HOST', 'localhost'),
                     'username' => env('DB_USERNAME', 'root'),
                     'password' => env('DB_PASSWORD', ''),
-                    'database' => env('DB_DATABASE', 'partacz_fishing'),
+                    'database' => env('DB_DATABASE', 'carplab'),
                     'port' => env('DB_PORT', '3306')
                 ];
             } catch (Exception $e) {
@@ -1441,7 +1441,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'host' => env('DB_HOST', 'localhost'),
                     'username' => env('DB_USERNAME', 'root'),
                     'password' => env('DB_PASSWORD', ''),
-                    'database' => env('DB_DATABASE', 'partacz_fishing'),
+                    'database' => env('DB_DATABASE', 'carplab'),
                     'port' => env('DB_PORT', '3306')
                 ];
             } catch (Exception $e) {

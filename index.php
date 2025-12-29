@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Partacz-Fishing</title>
+    <title>CarpLab</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
                     <path d="M15.5 8c-1.657-2.5-4.5-4-7.5-4-1.7 0-3.29.5-4.5 1.5C2.5 5.5 2 5 1.5 5c-.5 0-1 .5-1 1s.5 1 1 1c.5 0 1-.5 1.5-1.5C4.21 7.5 5.8 8 7.5 8c3 0 5.843-1.5 7.5-4zm-7.5 5c1.7 0 3.29-.5 4.5-1.5.5 1 1 1.5 1.5 1.5.5 0 1-.5 1-1s-.5-1-1-1c-.5 0-1 .5-1.5 1.5C11.79 8.5 10.2 8 8.5 8c-3 0-5.843 1.5-7.5 4zm2-2a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                 </svg>
             </div>
-            <span>Partacz-Fishing</span>
+            <span>CarpLab</span>
         </div>
         
         <div class="nav-menu nav" id="mainTabs" role="tablist">
@@ -209,7 +209,7 @@
             <div class="tab-pane fade" id="products">
                 <div class="page-header d-flex justify-content-between align-items-end">
                     <div>
-                        <h1 class="page-title">Moja Spiżarniaa 1231312231222</h1>
+                        <h1 class="page-title">Moja Spiżarnia</h1>
                         <p class="page-subtitle">Zarządzaj składnikami do Twoich kulek</p>
                     </div>
                 </div>

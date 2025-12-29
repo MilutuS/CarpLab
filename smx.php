@@ -32,7 +32,7 @@ class smx {
                 'host' => env('DB_HOST', 'localhost'),
                 'username' => env('DB_USERNAME', 'root'),
                 'password' => env('DB_PASSWORD', ''),
-                'database' => env('DB_DATABASE', 'partacz_fishing'),
+                'database' => env('DB_DATABASE', 'carplab'),
                 'port' => env('DB_PORT', 3306),
                 'charset' => env('DB_CHARSET', 'utf8mb4')
             ];
