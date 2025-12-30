@@ -2016,30 +2016,106 @@ function renderStockTable() {
 
     const listItem = `
       <tr class="stock-list-item">
+        <td class="col-action text-center">
+          <button class="btn btn-light btn-sm stock-view-btn" onclick="viewStockProduct('${product.id}')" title="Podgląd">
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
         <td class="col-photo">
           <img src="${productImage}" class="stock-list-img" alt="${product.name}" onerror="this.src='${defaultImage}'">
         </td>
         <td>
           <div class="stock-list-info">
             <h6 class="stock-list-name">${product.name}</h6>
-            <small class="text-muted">Wartość: ${valueText}</small>
+            <small class="text-muted d-md-none">
+              <span class="stock-list-amount ${stockColor}">${product.weight} ${product.unit}</span>
+              <span class="mx-1">•</span>
+              Wartość: ${valueText}
+            </small>
           </div>
         </td>
-        <td class="text-center">
-          <span class="stock-list-amount ${stockColor}">${product.weight} <small>${product.unit}</small></span>
+        <td class="text-center d-none d-md-table-cell">
+          <span class="stock-list-amount ${stockColor}">${product.weight} ${product.unit}</span>
         </td>
-        <td class="d-none d-sm-table-cell text-center fw-bold text-secondary">
+        <td class="d-none d-md-table-cell text-center fw-bold text-secondary">
           ${valueText}
-        </td>
-        <td class="col-action text-center">
-          <button class="btn btn-light btn-sm" onclick="viewProduct('${product.id}')" title="Podgląd">
-            <i class="bi bi-eye"></i>
-          </button>
         </td>
       </tr>
     `;
     tbody.append(listItem);
   });
+}
+
+// Wyświetl szczegóły produktu w magazynie
+function viewStockProduct(productId) {
+  const product = products.find(p => p.id === productId);
+  
+  if (!product) {
+    Swal.fire('Błąd', 'Nie znaleziono produktu', 'error');
+    return;
+  }
+
+  const defaultImage = 'uploads/default.png';
+  const productImage = product.image || defaultImage;
+  const price = product.price_per_1000 ? parseFloat(product.price_per_1000) : 0;
+  const totalValue = price > 0 && product.weight > 0 ? (product.weight / 1000) * price : 0;
+  const valueText = totalValue > 0 ? totalValue.toFixed(2) + " zł" : "-";
+  
+  Swal.fire({
+    title: product.name,
+    html: `
+      <div class="text-start">
+        <div class="text-center mb-3">
+          <img src="${productImage}" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;" onerror="this.src='${defaultImage}'">
+        </div>
+        <div class="mb-2">
+          <strong>Stan magazynowy:</strong> ${product.weight} ${product.unit}
+        </div>
+        <div class="mb-2">
+          <strong>Wartość całkowita:</strong> ${valueText}
+        </div>
+        ${product.price_per_1000 ? `<div class="mb-2"><strong>Cena za 1000${product.unit}:</strong> ${parseFloat(product.price_per_1000).toFixed(2)} zł</div>` : ''}
+        ${product.description ? `<div class="mb-2"><strong>Opis:</strong> ${product.description}</div>` : ''}
+        ${product.link ? `<div class="mb-3"><a href="${product.link}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-cart me-1"></i> Przejdź do sklepu</a></div>` : ''}
+      </div>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-primary flex-fill" onclick="Swal.close(); addWeightToProduct('${product.id}')">
+          <i class="bi bi-pencil me-1"></i> Edytuj
+        </button>
+        <button class="btn btn-secondary flex-fill" onclick="Swal.close(); viewProductHistory('${product.id}')">
+          <i class="bi bi-clock-history me-1"></i> Historia
+        </button>
+        <button class="btn btn-danger flex-fill" onclick="Swal.close(); deleteProduct('${product.id}')">
+          <i class="bi bi-trash me-1"></i> Usuń
+        </button>
+      </div>
+    `,
+    showConfirmButton: false,
+    showCloseButton: true,
+    width: '600px',
+    customClass: {
+      popup: 'stock-product-modal'
+    }
+  });
+}
+
+// Toggle szczegółów produktu w magazynie
+function toggleStockDetails(productId) {
+  const detailsRow = $(`#stock-details-${productId}`);
+  const toggleBtn = $(`.stock-list-item[data-product-id="${productId}"] .stock-toggle-btn i`);
+  
+  if (detailsRow.is(':visible')) {
+    detailsRow.slideUp(200);
+    toggleBtn.removeClass('bi-chevron-up').addClass('bi-chevron-down');
+  } else {
+    // Ukryj wszystkie inne szczegóły
+    $('.stock-details-row').slideUp(200);
+    $('.stock-toggle-btn i').removeClass('bi-chevron-up').addClass('bi-chevron-down');
+    
+    // Pokaż ten wiersz
+    detailsRow.slideDown(200);
+    toggleBtn.removeClass('bi-chevron-down').addClass('bi-chevron-up');
+  }
 }
 
 // ============= HISTORIA I BACKUP =============

@@ -315,6 +315,26 @@ h5 {
 }
 
 /* === Stock List (Magazyn) === */
+.col-action {
+  width: 70px;
+  min-width: 70px;
+  padding-left: 1rem !important;
+}
+
+.col-photo {
+  width: 70px;
+  min-width: 70px;
+}
+
+.col-product {
+  width: auto;
+}
+
+.col-qty {
+  width: 120px;
+  min-width: 120px;
+}
+
 .stock-list-item {
   transition: background-color 0.2s ease;
 }
@@ -345,15 +365,26 @@ h5 {
 
 .stock-list-amount {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   white-space: nowrap;
 }
 
-.stock-list-amount small {
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  margin-left: 2px;
+.col-action {
+  width: 60px;
+  min-width: 60px;
+}
+
+.stock-view-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stock-view-btn i {
+  font-size: 1.2rem;
 }
 
 /* === Buttons === */
@@ -683,26 +714,50 @@ h5 {
 
   .product-actions .btn:last-child {
     flex: 0 0 38px;
-    width: 38px;
+    widaction {
+    width: 50px;
+    min-width: 50px;
+    padding-left: 0.75rem !important;
   }
 
-  .badge-price {
-    font-size: 0.75rem;
-    padding: 0.3rem 0.5rem;
+  .col-photo {
+    width: 55px;
+    min-width: 55px;
   }
 
-  /* === Mobile Stock List === */
+  .col-product {
+    max-width: calc(100vw - 170px)
+
+  .col-product {
+    max-width: calc(100vw - 170px);
+  }
+
+  .col-action {
+    width: 60px;
+    min-width: 60px;
+    padding-right: 1rem !important;
+  }
+
   .stock-list-img {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
   }
 
   .stock-list-name {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .stock-list-amount {
-    font-size: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .stock-view-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stock-view-btn i {
+    font-size: 1.1rem;
   }
 
   .page-header {
