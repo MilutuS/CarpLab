@@ -15,7 +15,23 @@
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     
-    <link href="style.css" rel="stylesheet">
+    <!-- Main Styles -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    
+    <!-- Page-specific Styles -->
+    <link href="assets/css/home.css" rel="stylesheet">
+    <link href="assets/css/products.css" rel="stylesheet">
+    <link href="assets/css/recipes.css" rel="stylesheet">
+    <link href="assets/css/stock.css" rel="stylesheet">
+    <link href="assets/css/orders.css" rel="stylesheet">
+    <link href="assets/css/executed.css" rel="stylesheet">
+    <link href="assets/css/finished-balls.css" rel="stylesheet">
+    <link href="assets/css/settings.css" rel="stylesheet">
+    <link href="assets/css/history.css" rel="stylesheet">
+    <link href="assets/css/users.css" rel="stylesheet">
+    <link href="assets/css/pending-recipes.css" rel="stylesheet">
+    <link href="assets/css/backup.css" rel="stylesheet">
+    <link href="assets/css/modals.css" rel="stylesheet">
 </head>
 <body>
 
@@ -70,7 +86,11 @@
                 <i class="bi bi-shield-lock-fill"></i> <span class="nav-text-desktop">Admin</span><span class="nav-text-mobile">Admin</span>
             </a>
             
-            <button class="nav-item mobile-logout-btn require-login d-none" id="mobileLogoutBtn" type="button" style="display: none;">
+            <button class="btn btn-primary btn-sm mobile-login-btn require-logout" id="mobileLoginBtn" type="button">
+                Zaloguj się
+            </button>
+            
+            <button class="nav-item mobile-logout-btn require-login d-none" id="mobileLogoutBtn" type="button">
                 <i class="bi bi-box-arrow-right"></i>
             </button>
         </div>
@@ -183,6 +203,20 @@ $(document).ready(function() {
     // Obsługa mobilnego przycisku wylogowania
     $('#mobileLogoutBtn').on('click', function() {
         $('#logoutBtn').trigger('click');
+    });
+    
+    // Obsługa mobilnego przycisku logowania
+    $('#mobileLoginBtn').on('click', function() {
+        $('#loginModal').modal('show');
+    });
+    
+    // Obsługa zwijania/rozwijania sekcji "Dodaj przepis" na mobile
+    $('#addRecipeCollapse').on('show.bs.collapse', function() {
+        $('.card-header-collapse[data-bs-target="#addRecipeCollapse"]').attr('aria-expanded', 'true');
+    });
+    
+    $('#addRecipeCollapse').on('hide.bs.collapse', function() {
+        $('.card-header-collapse[data-bs-target="#addRecipeCollapse"]').attr('aria-expanded', 'false');
     });
 });
 </script>

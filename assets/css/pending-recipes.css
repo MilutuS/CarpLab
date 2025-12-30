@@ -1,0 +1,117 @@
+/* ===================================
+   PENDING RECIPES PAGE STYLES
+   =================================== */
+
+/* === Pending Header === */
+#pending-recipes .d-flex.justify-content-between {
+  margin-bottom: 1.5rem;
+}
+
+#pending-recipes .badge.bg-warning {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+/* === Pending List === */
+#pendingRecipesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* === Pending Recipe Card === */
+.pending-recipe-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.pending-recipe-card:hover {
+  box-shadow: var(--shadow-float);
+}
+
+.pending-recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.pending-recipe-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.pending-recipe-author {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.pending-recipe-date {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.pending-recipe-content {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: var(--radius-md);
+}
+
+.pending-recipe-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.pending-recipe-actions .btn {
+  flex: 1;
+}
+
+/* === Approve/Reject Buttons === */
+.btn-approve {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.btn-approve:hover {
+  background-color: #059669;
+  border-color: #059669;
+  color: white;
+}
+
+.btn-reject {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  color: white;
+}
+
+.btn-reject:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  color: white;
+}
+
+/* === Mobile Pending === */
+@media (max-width: 576px) {
+  .pending-recipe-card {
+    padding: 1rem;
+  }
+  
+  .pending-recipe-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .pending-recipe-actions {
+    flex-direction: column;
+  }
+}

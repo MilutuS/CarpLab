@@ -232,6 +232,49 @@
     </div>
 </div>
 
+<!-- Modal dodawania użytkownika przez admina -->
+<div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-person-plus me-2"></i>Dodaj nowego użytkownika
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="mb-3">
+                        <label class="form-label">Nazwa użytkownika</label>
+                        <input type="text" class="form-control" id="newUsername" required placeholder="np. jan_kowalski">
+                        <div class="form-text">Minimum 3 znaki, bez spacji</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="newUserEmail" required placeholder="jan@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hasło</label>
+                        <input type="password" class="form-control" id="newUserPassword" required minlength="6" placeholder="Minimum 6 znaków">
+                        <div class="form-text">Hasło musi mieć minimum 6 znaków</div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="newUserIsAdmin">
+                            <label class="form-check-label" for="newUserIsAdmin">
+                                <i class="bi bi-shield-check me-1"></i>Uprawnienia administratora
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-check-circle me-2"></i>Dodaj użytkownika
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal zarządzania ilością kulek -->
 <div class="modal fade" id="manageBallModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">

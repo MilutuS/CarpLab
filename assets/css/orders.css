@@ -1,0 +1,63 @@
+/* ===================================
+   ORDERS PAGE STYLES
+   =================================== */
+
+/* === Orders Form Card === */
+#orders .clean-card.sticky-top {
+  z-index: 1;
+}
+
+/* === Orders Toggle Buttons === */
+#orders .bg-light.rounded-3.border {
+  background-color: #f8fafc !important;
+}
+
+#orders .btn-check:checked + .btn {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* === Orders List === */
+#ordersList .clean-card {
+  margin-bottom: 1rem;
+}
+
+#ordersList .list-group-item {
+  border: none;
+  padding: 1rem;
+  background: transparent;
+}
+
+#ordersList .list-group-item:hover {
+  background-color: #f8fafc;
+}
+
+/* === Order Item Actions === */
+#ordersList .btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+/* === Mobile Orders === */
+@media (max-width: 991px) {
+  #orders .sticky-top {
+    position: relative !important;
+    top: auto !important;
+  }
+  
+  #orders .col-lg-4 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #ordersList .d-flex {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  #ordersList .btn-group {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

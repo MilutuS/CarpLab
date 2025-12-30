@@ -1770,6 +1770,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             echo json_encode(['success' => true, 'message' => 'Użytkownik odblokowany']);
             break;
             
+        case 'add_user_by_admin':
+            requireAdmin();
+            
+            $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+            $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+            $isAdmin = isset($_POST['is_admin']) ? intval($_POST['is_admin']) : 0;
+            
+            // Walidacja
+            if (empty($username) || empty($email) || empty($password)) {
+                echo json_encode(['success' => false, 'error' => 'Wszystkie pola są wymagane']);
+                exit;
+            }
+            
+            if (strlen($username) < 3) {
+                echo json_encode(['success' => false, 'error' => 'Nazwa użytkownika musi mieć minimum 3 znaki']);
+                exit;
+            }
+            
+            if (strpos($username, ' ') !== false) {
+                echo json_encode(['success' => false, 'error' => 'Nazwa użytkownika nie może zawierać spacji']);
+                exit;
+            }
+            
+            if (strlen($password) < 6) {
+                echo json_encode(['success' => false, 'error' => 'Hasło musi mieć minimum 6 znaków']);
+                exit;
+            }
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo json_encode(['success' => false, 'error' => 'Nieprawidłowy adres email']);
+                exit;
+            }
+            
+            // Sprawdź czy użytkownik już istnieje
+            $existingUser = smx::justQuery("SELECT id FROM users WHERE username = ? OR email = ?", [$username, $email]);
+            if (!empty($existingUser)) {
+                echo json_encode(['success' => false, 'error' => 'Użytkownik o tej nazwie lub emailu już istnieje']);
+                exit;
+            }
+            
+            // Dodaj użytkownika
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            smx::justQuery(
+                "INSERT INTO users (username, email, password, is_admin, is_blocked, created_at) VALUES (?, ?, ?, ?, 0, NOW())",
+                [$username, $email, $hashedPassword, $isAdmin]
+            );
+            
+            logActivity('user_added_by_admin', 'Dodano nowego użytkownika: ' . $username . ' (admin: ' . ($isAdmin ? 'tak' : 'nie') . ')');
+            echo json_encode(['success' => true, 'message' => 'Użytkownik został dodany pomyślnie']);
+            break;
+            
         case 'switch_user':
             requireAdmin();
             

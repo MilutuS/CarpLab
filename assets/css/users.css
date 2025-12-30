@@ -1,0 +1,182 @@
+/* ===================================
+   USERS PAGE STYLES
+   =================================== */
+
+/* === Header with Search and Add Button === */
+#users .d-flex.justify-content-between {
+  margin-bottom: 1.5rem;
+}
+
+#users #userSearch {
+  flex: 1;
+  max-width: 400px;
+}
+
+#users #addUserBtn {
+  white-space: nowrap;
+}
+
+/* === Users List === */
+#usersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* === User Card Item === */
+.user-card-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  gap: 1rem;
+}
+
+.user-card-item:hover {
+  background: white;
+  box-shadow: var(--shadow-card);
+}
+
+.user-card-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.user-info-block {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.user-date {
+  margin-top: 0.25rem;
+}
+
+/* === User Actions === */
+.user-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.user-actions .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.user-actions .btn i {
+  font-size: 0.9rem;
+}
+
+/* === Mobile Users === */
+@media (max-width: 768px) {
+  #users .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.75rem;
+  }
+  
+  #users #userSearch {
+    max-width: 100%;
+  }
+  
+  #users #addUserBtn {
+    width: 100%;
+  }
+  
+  .user-card-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+  }
+  
+  .user-card-main {
+    margin-bottom: 0.75rem;
+  }
+  
+  .user-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 0.9rem;
+  }
+  
+  .user-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .user-actions .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .user-actions .btn .btn-text {
+    display: none;
+  }
+  
+  .user-actions .btn i {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .user-actions {
+    flex-wrap: nowrap;
+  }
+  
+  .user-actions .btn {
+    padding: 0.5rem 0.4rem;
+    min-width: 0;
+  }
+}

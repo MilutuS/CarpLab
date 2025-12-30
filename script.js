@@ -122,10 +122,12 @@ function updateUserUI(loggedIn) {
     $('.require-admin').addClass('d-none');
     $('.require-logout').removeClass('d-none').css('display', '');
     
-    // Przełącz na zakładkę "Baza produktów" jeśli jesteśmy na ukrytej zakładce
+    // Niezalogowany użytkownik ma dostęp TYLKO do: home, recipes
+    // Przekieruj na stronę główną jeśli jest na niedozwolonej zakładce
     const activeTab = $('.nav-item.active').attr('data-bs-target');
-    if (activeTab === '#stock' || activeTab === '#orders' || activeTab === '#executed' || activeTab === '#history' || activeTab === '#backup') {
-      $('a[data-bs-target="#products"]').tab('show');
+    const allowedTabs = ['#home', '#recipes'];
+    if (!allowedTabs.includes(activeTab)) {
+      $('a[data-bs-target="#home"]').tab('show');
     }
   }
 }
@@ -2513,15 +2515,7 @@ function renderUsers(users) {
     return;
   }
   
-  let html = '<div class="table-responsive"><table class="table table-hover">';
-  html += '<thead><tr>';
-  html += '<th>Username</th>';
-  html += '<th>Email</th>';
-  html += '<th>Rola</th>';
-  html += '<th>Status</th>';
-  html += '<th>Data rejestracji</th>';
-  html += '<th>Akcje</th>';
-  html += '</tr></thead><tbody>';
+  let html = '';
   
   users.forEach(user => {
     const isAdmin = user.is_admin == 1;
@@ -2533,32 +2527,38 @@ function renderUsers(users) {
       ? '<span class="badge bg-warning text-dark">Admin</span>' 
       : '<span class="badge bg-secondary">User</span>';
     
-    html += '<tr>';
-    html += '<td>' + escapeHtml(user.username) + '</td>';
-    html += '<td>' + escapeHtml(user.email) + '</td>';
-    html += '<td>' + roleBadge + '</td>';
-    html += '<td>' + statusBadge + '</td>';
-    html += '<td>' + formatDateTime(user.created_at) + '</td>';
-    html += '<td>';
+    const initials = user.username.substring(0, 2).toUpperCase();
+    const avatarColor = isAdmin ? 'bg-warning' : 'bg-primary';
     
-    if (user.id !== currentUser.id) { // Nie pozwalaj blokować samego siebie
-      html += '<button class="btn btn-sm btn-info me-1" onclick="switchToUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')"><i class="bi bi-person-check me-1"></i>Przełącz się</button>';
-      html += '<button class="btn btn-sm btn-warning me-1" onclick="changeUserPassword(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')"><i class="bi bi-key me-1"></i>Zmień hasło</button>';
+    html += '<div class="user-card-item">';
+    html += '<div class="user-card-main">';
+    html += '<div class="user-avatar ' + avatarColor + '">' + initials + '</div>';
+    html += '<div class="user-info-block">';
+    html += '<div class="user-name">' + escapeHtml(user.username) + '</div>';
+    html += '<div class="user-email">' + escapeHtml(user.email) + '</div>';
+    html += '<div class="user-meta mt-1">' + roleBadge + ' ' + statusBadge + '</div>';
+    html += '<div class="user-date"><small class="text-muted"><i class="bi bi-calendar me-1"></i>' + formatDateTime(user.created_at) + '</small></div>';
+    html += '</div>';
+    html += '</div>';
+    
+    if (user.id !== currentUser.id) {
+      html += '<div class="user-actions">';
+      html += '<button class="btn btn-sm btn-info" onclick="switchToUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')" title="Przełącz się"><i class="bi bi-person-check"></i><span class="btn-text">Przełącz</span></button>';
+      html += '<button class="btn btn-sm btn-warning" onclick="changeUserPassword(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')" title="Zmień hasło"><i class="bi bi-key"></i><span class="btn-text">Hasło</span></button>';
       
       if (isBlocked) {
-        html += '<button class="btn btn-sm btn-success" onclick="unblockUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')"><i class="bi bi-unlock me-1"></i>Odblokuj</button>';
+        html += '<button class="btn btn-sm btn-success" onclick="unblockUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')" title="Odblokuj"><i class="bi bi-unlock"></i><span class="btn-text">Odblokuj</span></button>';
       } else {
-        html += '<button class="btn btn-sm btn-danger" onclick="blockUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')"><i class="bi bi-lock me-1"></i>Zablokuj</button>';
+        html += '<button class="btn btn-sm btn-danger" onclick="blockUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')" title="Zablokuj"><i class="bi bi-lock"></i><span class="btn-text">Zablokuj</span></button>';
       }
+      html += '</div>';
     } else {
-      html += '<span class="text-muted">To Ty</span>';
+      html += '<div class="user-actions"><span class="badge bg-light text-muted">To Ty</span></div>';
     }
     
-    html += '</td>';
-    html += '</tr>';
+    html += '</div>';
   });
   
-  html += '</tbody></table></div>';
   container.html(html);
 }
 
@@ -2826,6 +2826,56 @@ $('#userSearch').on('keyup', function() {
   });
   
   renderUsers(filtered);
+});
+
+// Przycisk dodawania użytkownika
+$('#addUserBtn').on('click', function() {
+  $('#addUserForm')[0].reset();
+  $('#addUserModal').modal('show');
+});
+
+// Formularz dodawania użytkownika
+$('#addUserForm').on('submit', function(e) {
+  e.preventDefault();
+  
+  const username = $('#newUsername').val().trim();
+  const email = $('#newUserEmail').val().trim();
+  const password = $('#newUserPassword').val();
+  const isAdmin = $('#newUserIsAdmin').is(':checked') ? 1 : 0;
+  
+  // Walidacja
+  if (username.length < 3) {
+    Swal.fire('Błąd', 'Nazwa użytkownika musi mieć minimum 3 znaki', 'error');
+    return;
+  }
+  
+  if (username.includes(' ')) {
+    Swal.fire('Błąd', 'Nazwa użytkownika nie może zawierać spacji', 'error');
+    return;
+  }
+  
+  if (password.length < 6) {
+    Swal.fire('Błąd', 'Hasło musi mieć minimum 6 znaków', 'error');
+    return;
+  }
+  
+  $.post('config.php', {
+    action: 'add_user_by_admin',
+    username: username,
+    email: email,
+    password: password,
+    is_admin: isAdmin
+  }, function(data) {
+    if (data.success) {
+      Swal.fire('Sukces!', data.message, 'success');
+      $('#addUserModal').modal('hide');
+      loadUsers();
+    } else {
+      Swal.fire('Błąd', data.error, 'error');
+    }
+  }, 'json').fail(function() {
+    Swal.fire('Błąd', 'Wystąpił problem z połączeniem', 'error');
+  });
 });
 
 function clearLogs() {

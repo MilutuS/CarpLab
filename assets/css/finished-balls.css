@@ -1,0 +1,129 @@
+/* ===================================
+   FINISHED BALLS PAGE STYLES
+   =================================== */
+
+/* === Add Button === */
+#finished-balls .btn-success {
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+#finished-balls .btn-success:hover {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+/* === Finished Balls List === */
+#finishedBallsList .row {
+  margin: 0 -0.5rem;
+}
+
+#finishedBallsList .row > [class*="col-"] {
+  padding: 0 0.5rem;
+}
+
+/* === Ball Card (inside clean-card) === */
+#finishedBallsList .clean-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#finishedBallsList .clean-card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+#finishedBallsList .card-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* === Stock Info === */
+#finishedBallsList .mb-3 {
+  flex-grow: 0;
+}
+
+#finishedBallsList .badge {
+  white-space: nowrap;
+}
+
+#finishedBallsList .alert {
+  margin-bottom: 0.5rem !important;
+  padding: 0.5rem !important;
+}
+
+/* === Action Buttons === */
+#finishedBallsList .d-flex.gap-2.mb-2 {
+  flex-wrap: nowrap;
+}
+
+#finishedBallsList .d-flex.gap-2.mb-2 .btn {
+  white-space: nowrap;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+#finishedBallsList .btn-outline-danger {
+  margin-top: auto;
+}
+
+/* === Timestamp === */
+#finishedBallsList .mt-2 small {
+  font-size: 0.75rem;
+  display: block;
+  word-wrap: break-word;
+}
+
+/* === Mobile Finished Balls === */
+@media (max-width: 767px) {
+  #finishedBallsList .row > [class*="col-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  #finishedBallsList .clean-card .card-body {
+    padding: 1rem;
+  }
+  
+  #finishedBallsList .card-title {
+    font-size: 1rem;
+  }
+  
+  #finishedBallsList .d-flex.gap-2.mb-2 {
+    flex-direction: row;
+    gap: 0.5rem !important;
+  }
+  
+  #finishedBallsList .d-flex.gap-2.mb-2 .btn {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  #finishedBallsList .d-flex.gap-2.mb-2 .manage-ball-btn {
+    flex: 1;
+  }
+  
+  #finishedBallsList .d-flex.gap-2.mb-2 .history-ball-btn {
+    flex: 0 0 auto;
+    width: 40px;
+    padding: 0.5rem;
+  }
+  
+  #finishedBallsList .btn-outline-danger {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #finishedBallsList .position-relative {
+    height: 150px !important;
+  }
+}

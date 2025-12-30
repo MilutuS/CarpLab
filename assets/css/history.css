@@ -1,0 +1,104 @@
+/* ===================================
+   HISTORY (LOGS) PAGE STYLES
+   =================================== */
+
+/* === History Table === */
+#history .table {
+  background: white;
+}
+
+#history .table thead th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-light);
+}
+
+#history .table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* === Log Icon Column === */
+#history .table td:first-child {
+  text-align: center;
+  width: 60px;
+}
+
+#history .table td:first-child i {
+  font-size: 1.2rem;
+}
+
+/* === Log Type Colors === */
+.log-icon-add {
+  color: var(--success);
+}
+
+.log-icon-edit {
+  color: var(--warning);
+}
+
+.log-icon-delete {
+  color: var(--danger);
+}
+
+.log-icon-execute {
+  color: var(--primary);
+}
+
+/* === Log Description === */
+.log-description {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+/* === Log User === */
+.log-user {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* === Log Date === */
+.log-date {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+/* === Clear Logs Button === */
+#history .btn-danger {
+  background-color: var(--danger);
+  border-color: var(--danger);
+}
+
+#history .btn-danger:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* === DataTables Customization === */
+#activityHistoryTable_wrapper .dataTables_filter input {
+  border-radius: var(--radius-md);
+  border: 1px solid #d1d1d1;
+  padding: 0.5rem 1rem;
+}
+
+#activityHistoryTable_wrapper .dataTables_length select {
+  border-radius: var(--radius-md);
+  border: 1px solid #d1d1d1;
+  padding: 0.25rem 0.5rem;
+}
+
+/* === Mobile History === */
+@media (max-width: 768px) {
+  #history .table {
+    font-size: 0.85rem;
+  }
+  
+  #history .table td:first-child {
+    width: 40px;
+  }
+  
+  .log-date {
+    font-size: 0.75rem;
+  }
+}

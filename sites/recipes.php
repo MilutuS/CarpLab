@@ -18,9 +18,19 @@
     <div class="row g-4">
         <div class="col-lg-5 order-lg-2 require-login d-none">
             <div class="clean-card position-sticky" style="top: 20px;">
-                <div class="card-body">
-                    <h5 class="fw-bold mb-4 text-primary">Dodaj przepis</h5>
-                    <form id="addRecipeForm">
+                <!-- Nagłówek zwijany na mobile -->
+                <div class="card-header-collapse d-lg-none" data-bs-toggle="collapse" data-bs-target="#addRecipeCollapse" aria-expanded="false">
+                    <h5 class="fw-bold mb-0 text-primary d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-plus-circle me-2"></i>Dodaj przepis</span>
+                        <i class="bi bi-chevron-down collapse-icon"></i>
+                    </h5>
+                </div>
+                
+                <!-- Zawartość formularza - zwijana na mobile -->
+                <div class="collapse d-lg-block" id="addRecipeCollapse">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-4 text-primary d-none d-lg-block">Dodaj przepis</h5>
+                        <form id="addRecipeForm">
                         <div class="mb-3">
                             <label class="form-label">Nazwa miksu</label>
                             <input type="text" class="form-control" id="recipeName" required placeholder="Np. Squid & Octopus">
@@ -105,6 +115,7 @@
                         
                         <button type="submit" class="btn btn-primary w-100 py-3">Zapisz Recepturę</button>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>

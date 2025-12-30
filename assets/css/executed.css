@@ -1,0 +1,87 @@
+/* ===================================
+   EXECUTED (HISTORY) PAGE STYLES
+   =================================== */
+
+/* === Executed Recipes List === */
+#executedRecipesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#executedRecipesList .clean-card {
+  margin-bottom: 0;
+}
+
+/* === Executed Item === */
+.executed-item {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.executed-item:last-child {
+  border-bottom: none;
+}
+
+.executed-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.executed-item-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.executed-item-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.executed-item-details {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.executed-item-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.executed-item-stat i {
+  color: var(--primary);
+}
+
+/* === Revert Button === */
+.executed-item .btn-outline-warning {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.executed-item .btn-outline-warning:hover {
+  background-color: var(--warning);
+  color: white;
+}
+
+/* === Mobile Executed === */
+@media (max-width: 576px) {
+  .executed-item {
+    padding: 1rem;
+  }
+  
+  .executed-item-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .executed-item-details {
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,255 @@
+/* ===================================
+   RECIPES PAGE STYLES
+   =================================== */
+
+/* === Collapsible Header (Mobile) === */
+.card-header-collapse {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  background: white;
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 0.2s;
+}
+
+.card-header-collapse:hover {
+  background: #f8fafc;
+}
+
+.card-header-collapse .collapse-icon {
+  transition: transform 0.3s ease;
+}
+
+.card-header-collapse[aria-expanded="true"] .collapse-icon {
+  transform: rotate(180deg);
+}
+
+#addRecipeCollapse .card-body {
+  padding-top: 1rem;
+}
+
+/* === Recipe Card Layout === */
+.recipe-card-layout {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow: hidden;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+
+.recipe-card-layout:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-float);
+  border-color: #cbd5e1;
+}
+
+/* === Recipe Image === */
+.recipe-img-wrapper {
+  width: 160px;
+  flex-shrink: 0;
+  position: relative;
+  background-color: #f1f5f9;
+}
+
+.recipe-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.recipe-img-wrapper:hover .recipe-img-overlay {
+  opacity: 1;
+}
+
+/* === Recipe Body === */
+.recipe-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  min-width: 0;
+}
+
+/* === Recipe Header === */
+.recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  gap: 10px;
+}
+
+.recipe-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-title-block {
+  overflow: hidden;
+  flex: 1;
+}
+
+.recipe-text-content {
+  min-width: 0;
+  flex: 1;
+}
+
+/* === Recipe Actions === */
+.recipe-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-left: auto;
+  background: white;
+}
+
+.recipe-actions-group {
+  flex-shrink: 0;
+  display: flex;
+  gap: 4px;
+}
+
+/* === Recipe Badges/Stats === */
+.recipe-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.recipe-badge-item {
+  flex: 1;
+  text-align: center;
+  padding: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recipe-stats-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.recipe-stat-badge {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === Recipe Form Sections === */
+#recipes .bg-light.rounded-4 {
+  background-color: #f8fafc !important;
+}
+
+#recipes .btn-white {
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+#recipes .btn-white:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* === Dry/Wet Ingredient Sections === */
+#dryIngredientsList,
+#wetIngredientsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#dryPercentInfo,
+#dryTotalInfo {
+  background: white;
+  border-radius: 8px;
+}
+
+/* === Recipe Filters === */
+#recipes .btn-group .btn-outline-primary {
+  border-color: var(--border-light);
+  color: var(--text-secondary);
+}
+
+#recipes .btn-group .btn-outline-primary:hover,
+#recipes .btn-group .btn-outline-primary.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* === Mobile Recipe Adjustments === */
+@media (max-width: 576px) {
+  .recipe-card-layout {
+    flex-direction: column;
+  }
+  
+  .recipe-img-wrapper {
+    width: 100%;
+    height: 140px;
+  }
+  
+  .recipe-body {
+    padding: 1rem;
+  }
+  
+  .recipe-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .recipe-actions {
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+  
+  .recipe-stats-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .recipe-stat-badge {
+    padding: 6px 8px;
+    justify-content: flex-start;
+  }
+}
+
+/* === Recipe Card Responsive === */
+@media (max-width: 768px) {
+  #recipes .col-lg-5,
+  #recipes .col-lg-7 {
+    order: 0 !important;
+  }
+  
+  #recipes .clean-card.position-sticky {
+    position: relative !important;
+    top: auto !important;
+  }
+}

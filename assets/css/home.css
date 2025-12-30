@@ -1,0 +1,140 @@
+/* ===================================
+   HOME PAGE STYLES
+   =================================== */
+
+/* === Hero Section === */
+.home-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius-lg);
+  color: white;
+  margin: -1rem -1rem 2rem -1rem;
+  padding: 1rem;
+}
+
+.home-hero h1 {
+  color: white;
+}
+
+.home-hero .lead {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* === Feature Icons === */
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+/* === Partners Slider === */
+.partners-section {
+  border-radius: var(--radius-lg);
+  margin: 2rem -1rem -1rem -1rem;
+}
+
+.partners-slider-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.partners-slider {
+  display: flex;
+  gap: 2rem;
+  transition: transform 0.5s ease-in-out;
+  padding: 1rem 0;
+  width: fit-content;
+}
+
+.partner-item {
+  flex: 0 0 180px;
+  height: 120px;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.partner-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-float);
+}
+
+.partner-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.partner-item:hover img {
+  filter: grayscale(0%);
+}
+
+.partner-placeholder {
+  font-weight: 600;
+  color: #6b7280;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.slider-btn:hover {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-float);
+}
+
+.slider-btn-prev {
+  left: 10px;
+}
+
+.slider-btn-next {
+  right: 10px;
+}
+
+/* === Mobile Adjustments === */
+@media (max-width: 768px) {
+  .home-hero {
+    text-align: center;
+  }
+  
+  .partners-slider-wrapper {
+    padding: 0 50px;
+  }
+  
+  .partner-item {
+    flex: 0 0 140px;
+    height: 100px;
+  }
+}

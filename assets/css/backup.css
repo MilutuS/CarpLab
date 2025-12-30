@@ -1,0 +1,107 @@
+/* ===================================
+   BACKUP PAGE STYLES
+   =================================== */
+
+/* === Backup Buttons === */
+#backup .btn-success {
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+#backup .btn-success:hover {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+#backup .btn-danger {
+  background-color: var(--danger);
+  border-color: var(--danger);
+}
+
+#backup .btn-danger:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* === Backups List === */
+#backupsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* === Backup Item === */
+.backup-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.backup-item:hover {
+  background: white;
+  box-shadow: var(--shadow-card);
+}
+
+.backup-item-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.backup-item-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.backup-item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.backup-item-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.backup-item-date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.backup-item-size {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.backup-item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* === Mobile Backup === */
+@media (max-width: 576px) {
+  .backup-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .backup-item-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,169 @@
+/* ===================================
+   STOCK PAGE STYLES
+   =================================== */
+
+/* === Stock List Layout === */
+.col-action {
+  width: 70px;
+  min-width: 70px;
+  padding-left: 1rem !important;
+}
+
+.col-photo {
+  width: 70px;
+  min-width: 70px;
+}
+
+.col-product {
+  width: auto;
+}
+
+.col-qty {
+  width: 120px;
+  min-width: 120px;
+}
+
+/* === Stock List Items === */
+.stock-list-item {
+  transition: background-color 0.2s ease;
+}
+
+.stock-list-item:hover {
+  background-color: #f8fafc;
+}
+
+.stock-list-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+.stock-list-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stock-list-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+.stock-list-amount {
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* === Stock View Button === */
+.stock-view-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stock-view-btn i {
+  font-size: 1.2rem;
+}
+
+/* === Stock Image === */
+.stock-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* === Stock Table Mobile Optimization === */
+@media (max-width: 991px) {
+  .col-action {
+    width: 50px;
+    min-width: 50px;
+    padding-left: 0.75rem !important;
+  }
+
+  .col-photo {
+    width: 55px;
+    min-width: 55px;
+  }
+
+  .col-product {
+    max-width: calc(100vw - 170px);
+  }
+
+  .col-action {
+    width: 60px;
+    min-width: 60px;
+    padding-right: 1rem !important;
+  }
+
+  .stock-list-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stock-list-name {
+    font-size: 0.9rem;
+  }
+
+  .stock-list-amount {
+    font-size: 0.75rem;
+  }
+
+  .stock-view-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stock-view-btn i {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-responsive {
+    overflow-x: hidden;
+  }
+
+  .table {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 0.85rem;
+  }
+
+  .table thead th {
+    font-size: 0.7rem;
+    padding: 8px 4px;
+    white-space: nowrap;
+  }
+
+  .table tbody td {
+    padding: 8px 4px;
+    vertical-align: middle;
+    word-wrap: break-word;
+  }
+
+  .th-value {
+    display: none;
+  }
+
+  .col-photo {
+    width: 45px;
+  }
+
+  .col-qty {
+    width: 75px;
+    text-align: right;
+  }
+
+  .col-action {
+    width: 40px;
+    text-align: center;
+  }
+}
