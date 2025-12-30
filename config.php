@@ -1272,6 +1272,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     exit;
                 }
                 
+                // Usuń zdjęcie produktu jeśli istnieje
+                if (!empty($product['image']) && file_exists($product['image'])) {
+                    @unlink($product['image']);
+                    error_log("Deleted product image: " . $product['image']);
+                }
+                
                 smx::justQuery("DELETE FROM products WHERE id = ?", [$productId]);
                 
                 logActivity('product_deleted', "Usunięto produkt: {$product['name']}", [
@@ -1300,6 +1306,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 if ($recipe['user_id'] !== $userId && !$isAdmin) {
                     echo json_encode(['success' => false, 'error' => 'Brak uprawnień do usunięcia tego przepisu']);
                     exit;
+                }
+                
+                // Usuń zdjęcie przepisu jeśli istnieje i nie jest domyślne
+                if (!empty($recipe['image']) && $recipe['image'] !== 'uploads/default.png' && file_exists($recipe['image'])) {
+                    @unlink($recipe['image']);
+                    error_log("Deleted recipe image: " . $recipe['image']);
                 }
                 
                 smx::justQuery("DELETE FROM recipes WHERE id = ?", [$recipeId]);
@@ -1796,6 +1808,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             // Pobierz dane użytkownika przed usunięciem
             $userData = smx::justQuery("SELECT username FROM users WHERE id = ?", [$targetUserId]);
             $username = !empty($userData) ? $userData[0]['username'] : 'Unknown';
+            
+            // Usuń foldery ze zdjęciami użytkownika
+            $userProductsDir = 'uploads/products/' . $targetUserId;
+            $userRecipesDir = 'uploads/recipes/' . $targetUserId;
+            
+            if (is_dir($userProductsDir)) {
+                $files = glob($userProductsDir . '/*');
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        @unlink($file);
+                    }
+                }
+                @rmdir($userProductsDir);
+                error_log("Deleted user products directory: " . $userProductsDir);
+            }
+            
+            if (is_dir($userRecipesDir)) {
+                $files = glob($userRecipesDir . '/*');
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        @unlink($file);
+                    }
+                }
+                @rmdir($userRecipesDir);
+                error_log("Deleted user recipes directory: " . $userRecipesDir);
+            }
             
             // Usuń dane użytkownika z różnych tabel
             smx::justQuery("DELETE FROM products WHERE user_id = ?", [$targetUserId]);
