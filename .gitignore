@@ -1,8 +1,6 @@
 .env
 .vscode/sftp.json
 php_errors.log
-/uploads/product_*
-/uploads/recipe_*
-/uploads/products/product_*
-/uploads/recipes/recipe_*
+/uploads/products/*/product_*
+/uploads/recipes/*/recipe_*
 /backups/backup_*

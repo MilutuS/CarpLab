@@ -635,8 +635,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     exit;
                 }
                 
+                $userId = getCurrentUserId();
                 $filename = uniqid('product_') . '.' . $ext;
-                $productsDir = UPLOADS_DIR . 'products/';
+                $productsDir = UPLOADS_DIR . 'products/' . $userId . '/';
                 $destination = $productsDir . $filename;
                 
                 if (!file_exists($productsDir)) {
@@ -644,7 +645,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                    $imageUrl = 'uploads/products/' . $filename;
+                    $imageUrl = 'uploads/products/' . $userId . '/' . $filename;
                     error_log("Image uploaded successfully: {$imageUrl}");
                 } else {
                     error_log("Failed to move uploaded file to: {$destination}");
@@ -718,8 +719,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 if (!in_array($ext, $allowedExtensions)) {
                     error_log("Invalid file extension on update: {$ext}");
                 } else {
+                    $userId = getCurrentUserId();
                     $imageName = uniqid('product_') . '.' . $ext;
-                    $productsDir = UPLOADS_DIR . 'products/';
+                    $productsDir = UPLOADS_DIR . 'products/' . $userId . '/';
                     $destination = $productsDir . $imageName;
                     
                     if (!file_exists($productsDir)) {
@@ -727,7 +729,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     }
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                        $imagePath = 'uploads/products/' . $imageName;
+                        $imagePath = 'uploads/products/' . $userId . '/' . $imageName;
                     } else {
                         error_log("Failed to move uploaded file on update to: {$destination}");
                     }
@@ -802,8 +804,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     exit;
                 }
                 
+                $userId = getCurrentUserId();
                 $filename = uniqid('recipe_') . '.' . $ext;
-                $recipesDir = UPLOADS_DIR . 'recipes/';
+                $recipesDir = UPLOADS_DIR . 'recipes/' . $userId . '/';
                 $destination = $recipesDir . $filename;
                 
                 if (!file_exists($recipesDir)) {
@@ -811,7 +814,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                    $imageUrl = 'uploads/recipes/' . $filename;
+                    $imageUrl = 'uploads/recipes/' . $userId . '/' . $filename;
                     error_log("Recipe image uploaded successfully: {$imageUrl}");
                 } else {
                     error_log("Failed to move uploaded recipe image to: {$destination}");
@@ -921,7 +924,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 $filename = uniqid('recipe_') . '.' . $ext;
-                $recipesDir = UPLOADS_DIR . 'recipes/';
+                $recipesDir = UPLOADS_DIR . 'recipes/' . $userId . '/';
                 $destination = $recipesDir . $filename;
                 
                 error_log("UPDATE_RECIPE - Attempting to save to: {$destination}");
@@ -932,7 +935,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                    $imageUrl = 'uploads/recipes/' . $filename;
+                    $imageUrl = 'uploads/recipes/' . $userId . '/' . $filename;
                     error_log("Recipe image updated successfully: {$imageUrl}");
                     
                     // Usuń stare zdjęcie jeśli istnieje i jest inne niż domyślne
