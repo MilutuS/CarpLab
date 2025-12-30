@@ -276,7 +276,7 @@ h5 {
 }
 
 .product-details {
-  padding: 1.2rem; /* Trochę mniejszy padding żeby zyskać miejsce */
+  padding: 1.2rem;
   flex-grow: 1;
 }
 
@@ -290,31 +290,70 @@ h5 {
   text-overflow: ellipsis;
 }
 
-/* --- POPRAWKA PRZYCISKÓW AKCJI --- */
 .product-actions {
   padding: 0.8rem 1.2rem;
   border-top: 1px solid var(--border-light);
   background: white;
   display: flex;
-  gap: 8px; /* Odstęp między przyciskami */
+  gap: 8px;
 }
 
-/* Przycisk Edycji (pierwszy) */
 .product-actions .btn:first-child {
-  flex: 1; /* Zajmuje całe wolne miejsce */
-  white-space: nowrap; /* Tekst w jednej linii */
+  flex: 1;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Przycisk Kosza (ostatni) */
 .product-actions .btn:last-child {
-  flex: 0 0 42px; /* SZTYWNA SZEROKOŚĆ: Nie kurcz się, nie rośnij, miej 42px */
+  flex: 0 0 42px;
   width: 42px;
-  padding: 0; /* Zerujemy padding, żeby ikona była idealnie na środku */
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* === Stock List (Magazyn) === */
+.stock-list-item {
+  transition: background-color 0.2s ease;
+}
+
+.stock-list-item:hover {
+  background-color: #f8fafc;
+}
+
+.stock-list-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+.stock-list-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stock-list-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+.stock-list-amount {
+  font-weight: 700;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.stock-list-amount small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: 2px;
 }
 
 /* === Buttons === */
@@ -612,6 +651,58 @@ h5 {
 
   .mobile-menu-toggle {
     display: flex !important;
+  }
+
+  /* === Mobile Products Grid === */
+  .product-grid-card {
+    display: block;
+  }
+
+  .product-img-container {
+    height: 120px;
+  }
+
+  .product-details {
+    padding: 0.8rem;
+  }
+
+  .product-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .product-actions {
+    padding: 0.6rem 0.8rem;
+    gap: 6px;
+  }
+
+  .product-actions .btn {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .product-actions .btn:last-child {
+    flex: 0 0 38px;
+    width: 38px;
+  }
+
+  .badge-price {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  /* === Mobile Stock List === */
+  .stock-list-img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .stock-list-name {
+    font-size: 0.95rem;
+  }
+
+  .stock-list-amount {
+    font-size: 1rem;
   }
 
   .page-header {

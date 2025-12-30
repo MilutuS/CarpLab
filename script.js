@@ -344,10 +344,10 @@ function renderProducts() {
     } else if (product.unit === 'szt') {
       maxWeight = userSettings.max_product_weight_szt || 100;
     } else {
-      maxWeight = 5000; // domyślnie
+      maxWeight = 5000;
     }
 
-    // Dynamiczna ocena stanu - relatywna do maksymalnej wartości
+    // Dynamiczna ocena stanu
     const percentageFilled = (parseFloat(product.weight) / maxWeight) * 100;
     let stockColor, progressBarColor;
     
@@ -1971,8 +1971,6 @@ function deleteOrder(id) {
 
 function renderStockTable() {
   const tbody = $("#stockTableBody");
-  const thead = $("#stockTableHead"); // Jeśli masz ID dla head, jeśli nie - zignoruj, CSS załatwi ukrywanie
-
   tbody.empty();
 
   if (products.length === 0) {
@@ -1982,66 +1980,65 @@ function renderStockTable() {
     return;
   }
 
-  // Wstrzykujemy nagłówki dynamicznie, żeby pasowały do logiki (opcjonalnie można to zrobić w HTML)
-  // Ale tutaj skupmy się na wierszach (tbody)
-
   products.forEach((product) => {
     const defaultImage = "uploads/default.png";
     const productImage = product.image || defaultImage;
-    const price = product.price_per_1000
-      ? parseFloat(product.price_per_1000)
-      : 0;
+    const price = product.price_per_1000 ? parseFloat(product.price_per_1000) : 0;
 
     // Oblicz wartość całkowitą
-    let totalValue =
-      price > 0 && product.weight > 0 ? (product.weight / 1000) * price : 0;
+    let totalValue = price > 0 && product.weight > 0 ? (product.weight / 1000) * price : 0;
     const valueText = totalValue > 0 ? totalValue.toFixed(2) + " zł" : "-";
 
-    // Dynamiczna klasa koloru dla wagi
-    const weightClass =
-      parseFloat(product.weight) < 200
-        ? "bg-danger bg-opacity-10 text-danger"
-        : "bg-success bg-opacity-10 text-success";
+    // Dynamiczna ocena stanu
+    let maxWeight;
+    if (product.unit === 'g') {
+      maxWeight = userSettings.max_product_weight_g || 5000;
+    } else if (product.unit === 'ml') {
+      maxWeight = userSettings.max_product_weight_ml || 2000;
+    } else if (product.unit === 'szt') {
+      maxWeight = userSettings.max_product_weight_szt || 100;
+    } else {
+      maxWeight = 5000;
+    }
 
-    const row = `
-        <tr>
-            <td class="col-photo">
-                <img src="${productImage}" class="stock-img border" onerror="this.src='${defaultImage}'">
-            </td>
-            
-            <td>
-                <div class="fw-bold text-dark lh-1">${product.name}</div>
-                <div class="small text-muted mt-1 fw-medium" style="font-size: 0.75rem;">
-                    Wartość: ${valueText}
-                </div>
-            </td>
-            
-            <td class="col-qty text-center">
-                <div class="badge ${weightClass} border d-inline-block" style="font-weight: 600;">
-                    ${product.weight} <span style="font-size: 0.9em; opacity: 0.8;">${product.unit}</span>
-                </div>
-            </td>
-            
-            <td class="d-none d-sm-table-cell fw-bold text-secondary text-center">
-                ${valueText}
-            </td>
-            
-            <td class="col-action text-center">
-                <div class="btn-group" role="group">
-                    <button class="btn btn-sm btn-light border" onclick="addWeightToProduct('${product.id}')" title="Edytuj">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm btn-light border" onclick="viewProductHistory('${product.id}')" title="Historia">
-                        <i class="bi bi-clock-history"></i>
-                    </button>
-                    <button class="btn btn-sm btn-light border text-danger" onclick="deleteProduct('${product.id}')" title="Usuń">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
+    const percentageFilled = (parseFloat(product.weight) / maxWeight) * 100;
+    let stockColor;
+    
+    if (percentageFilled <= 20) {
+      stockColor = "text-danger";
+    } else if (percentageFilled <= 40) {
+      stockColor = "text-warning";
+    } else if (percentageFilled < 80) {
+      stockColor = "text-success";
+    } else {
+      stockColor = "text-primary";
+    }
+
+    const listItem = `
+      <tr class="stock-list-item">
+        <td class="col-photo">
+          <img src="${productImage}" class="stock-list-img" alt="${product.name}" onerror="this.src='${defaultImage}'">
+        </td>
+        <td>
+          <div class="stock-list-info">
+            <h6 class="stock-list-name">${product.name}</h6>
+            <small class="text-muted">Wartość: ${valueText}</small>
+          </div>
+        </td>
+        <td class="text-center">
+          <span class="stock-list-amount ${stockColor}">${product.weight} <small>${product.unit}</small></span>
+        </td>
+        <td class="d-none d-sm-table-cell text-center fw-bold text-secondary">
+          ${valueText}
+        </td>
+        <td class="col-action text-center">
+          <button class="btn btn-light btn-sm" onclick="viewProduct('${product.id}')" title="Podgląd">
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
     `;
-    tbody.append(row);
+    tbody.append(listItem);
   });
 }
 

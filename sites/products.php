@@ -95,7 +95,7 @@
         
         <div class="col-lg-8 order-lg-1">
             <div id="productsList" class="row g-3">
-                </div>
+            </div>
         </div>
     </div>
 </div>
