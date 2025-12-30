@@ -636,14 +636,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 $filename = uniqid('product_') . '.' . $ext;
-                $destination = UPLOADS_DIR . $filename;
+                $productsDir = UPLOADS_DIR . 'products/';
+                $destination = $productsDir . $filename;
                 
-                if (!file_exists(UPLOADS_DIR)) {
-                    mkdir(UPLOADS_DIR, 0777, true);
+                if (!file_exists($productsDir)) {
+                    mkdir($productsDir, 0777, true);
                 }
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                    $imageUrl = 'uploads/' . $filename;
+                    $imageUrl = 'uploads/products/' . $filename;
                     error_log("Image uploaded successfully: {$imageUrl}");
                 } else {
                     error_log("Failed to move uploaded file to: {$destination}");
@@ -717,15 +718,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 if (!in_array($ext, $allowedExtensions)) {
                     error_log("Invalid file extension on update: {$ext}");
                 } else {
-                    $imageName = uniqid() . '.' . $ext;
-                    $destination = UPLOADS_DIR . $imageName;
+                    $imageName = uniqid('product_') . '.' . $ext;
+                    $productsDir = UPLOADS_DIR . 'products/';
+                    $destination = $productsDir . $imageName;
                     
-                    if (!file_exists(UPLOADS_DIR)) {
-                        mkdir(UPLOADS_DIR, 0777, true);
+                    if (!file_exists($productsDir)) {
+                        mkdir($productsDir, 0777, true);
                     }
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                        $imagePath = 'uploads/' . $imageName;
+                        $imagePath = 'uploads/products/' . $imageName;
                     } else {
                         error_log("Failed to move uploaded file on update to: {$destination}");
                     }
@@ -801,14 +803,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 $filename = uniqid('recipe_') . '.' . $ext;
-                $destination = UPLOADS_DIR . $filename;
+                $recipesDir = UPLOADS_DIR . 'recipes/';
+                $destination = $recipesDir . $filename;
                 
-                if (!file_exists(UPLOADS_DIR)) {
-                    mkdir(UPLOADS_DIR, 0777, true);
+                if (!file_exists($recipesDir)) {
+                    mkdir($recipesDir, 0777, true);
                 }
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                    $imageUrl = 'uploads/' . $filename;
+                    $imageUrl = 'uploads/recipes/' . $filename;
                     error_log("Recipe image uploaded successfully: {$imageUrl}");
                 } else {
                     error_log("Failed to move uploaded recipe image to: {$destination}");
@@ -918,17 +921,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 
                 $filename = uniqid('recipe_') . '.' . $ext;
-                $destination = UPLOADS_DIR . $filename;
+                $recipesDir = UPLOADS_DIR . 'recipes/';
+                $destination = $recipesDir . $filename;
                 
                 error_log("UPDATE_RECIPE - Attempting to save to: {$destination}");
                 
-                if (!file_exists(UPLOADS_DIR)) {
-                    mkdir(UPLOADS_DIR, 0777, true);
+                if (!file_exists($recipesDir)) {
+                    mkdir($recipesDir, 0777, true);
                     error_log("UPDATE_RECIPE - Created uploads directory");
                 }
                 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                    $imageUrl = 'uploads/' . $filename;
+                    $imageUrl = 'uploads/recipes/' . $filename;
                     error_log("Recipe image updated successfully: {$imageUrl}");
                     
                     // Usuń stare zdjęcie jeśli istnieje i jest inne niż domyślne

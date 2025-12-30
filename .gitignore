@@ -2,7 +2,7 @@
 .vscode/sftp.json
 php_errors.log
 /uploads/product_*
-/uploads/recipe*
+/uploads/recipe_*
+/uploads/products/product_*
+/uploads/recipes/recipe_*
 /backups/backup_*
-.env
-php_errors.log
