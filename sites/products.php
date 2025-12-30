@@ -10,7 +10,11 @@
         <div class="col-lg-4 order-lg-2 require-login d-none">
             <div class="clean-card mb-4">
                 <div class="card-body">
-                    <h5 class="fw-bold mb-4 d-flex align-items-center"><i class="bi bi-plus-circle-fill text-primary me-2"></i>Nowy Składnik</h5>
+                    <button class="btn btn-primary w-100 mb-3 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#addProductCollapse" aria-expanded="false" aria-controls="addProductCollapse">
+                        <i class="bi bi-plus-circle-fill me-2"></i>Nowy Składnik
+                    </button>
+                    <h5 class="fw-bold mb-4 d-none d-lg-flex align-items-center"><i class="bi bi-plus-circle-fill text-primary me-2"></i>Nowy Składnik</h5>
+                    <div class="collapse d-lg-block" id="addProductCollapse">
                     <form id="addProductForm">
                         <div class="mb-3">
                             <label class="form-label">Nazwa produktu</label>
@@ -89,6 +93,7 @@
                             Dodaj Składnik
                         </button>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>

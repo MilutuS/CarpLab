@@ -218,6 +218,15 @@ $(document).ready(function() {
     $('#addRecipeCollapse').on('hide.bs.collapse', function() {
         $('.card-header-collapse[data-bs-target="#addRecipeCollapse"]').attr('aria-expanded', 'false');
     });
+    
+    // Obsługa zwijania/rozwijania sekcji "Nowy Składnik" na mobile
+    $('#addProductCollapse').on('show.bs.collapse', function() {
+        $('button[data-bs-target="#addProductCollapse"]').attr('aria-expanded', 'true');
+    });
+    
+    $('#addProductCollapse').on('hide.bs.collapse', function() {
+        $('button[data-bs-target="#addProductCollapse"]').attr('aria-expanded', 'false');
+    });
 });
 </script>
 
