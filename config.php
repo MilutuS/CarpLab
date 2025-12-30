@@ -1770,13 +1770,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             echo json_encode(['success' => true, 'message' => 'Użytkownik odblokowany']);
             break;
             
-        case 'add_user_by_admin':
+        case 'delete_user':
             requireAdmin();
+            
+            $targetUserId = isset($_POST['user_id']) ? $_POST['user_id'] : '';
+            
+            if (empty($targetUserId)) {
+                echo json_encode(['success' => false, 'error' => 'Brak ID użytkownika']);
+                exit;
+            }
+            
+            // Sprawdź czy to nie ty sam
+            if ($targetUserId === $_SESSION['user_id']) {
+                echo json_encode(['success' => false, 'error' => 'Nie możesz usunąć samego siebie']);
+                exit;
+            }
+            
+            // Pobierz dane użytkownika przed usunięciem
+            $userData = smx::justQuery("SELECT username FROM users WHERE id = ?", [$targetUserId]);
+            $username = !empty($userData) ? $userData[0]['username'] : 'Unknown';
+            
+            // Usuń dane użytkownika z różnych tabel
+            smx::justQuery("DELETE FROM products WHERE user_id = ?", [$targetUserId]);
+            smx::justQuery("DELETE FROM recipes WHERE user_id = ?", [$targetUserId]);
+            smx::justQuery("DELETE FROM orders WHERE user_id = ?", [$targetUserId]);
+            smx::justQuery("DELETE FROM executed_recipes WHERE user_id = ?", [$targetUserId]);
+            smx::justQuery("DELETE FROM finished_balls WHERE user_id = ?", [$targetUserId]);
+            smx::justQuery("DELETE FROM activity_log WHERE user_id = ?", [$targetUserId]);
+            
+            // Usuń samego użytkownika
+            smx::justQuery("DELETE FROM users WHERE id = ?", [$targetUserId]);
+            
+            logActivity('user_deleted', 'Usunięto użytkownika: ' . $username . ' (ID: ' . $targetUserId . ')');
+            echo json_encode(['success' => true, 'message' => 'Użytkownik został trwale usunięty']);
+            break;
+            
+        case 'add_user_by_admin':
+            error_log("add_user_by_admin called");
+            requireAdmin();
+            error_log("requireAdmin passed");
             
             $username = isset($_POST['username']) ? trim($_POST['username']) : '';
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
             $isAdmin = isset($_POST['is_admin']) ? intval($_POST['is_admin']) : 0;
+            
+            error_log("Username: $username, Email: $email, IsAdmin: $isAdmin");
             
             // Walidacja
             if (empty($username) || empty($email) || empty($password)) {
@@ -1812,10 +1851,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }
             
             // Dodaj użytkownika
+            $userId = uniqid();
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             smx::justQuery(
-                "INSERT INTO users (username, email, password, is_admin, is_blocked, created_at) VALUES (?, ?, ?, ?, 0, NOW())",
-                [$username, $email, $hashedPassword, $isAdmin]
+                "INSERT INTO users (id, username, email, password_hash, is_admin, is_blocked, created_at) VALUES (?, ?, ?, ?, ?, 0, ?)",
+                [$userId, $username, $email, $hashedPassword, $isAdmin, date('Y-m-d H:i:s')]
             );
             
             logActivity('user_added_by_admin', 'Dodano nowego użytkownika: ' . $username . ' (admin: ' . ($isAdmin ? 'tak' : 'nie') . ')');

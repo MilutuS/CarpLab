@@ -1378,6 +1378,14 @@ function editRecipe(recipeId) {
   $("#addRecipeForm").data("editing-id", recipeId);
   $('#addRecipeForm button[type="submit"]').text("Zaktualizuj Recepturę");
 
+  // Na mobilce rozwiń sekcję dodawania jeśli jest zwinięta
+  const addRecipeCollapse = document.getElementById('addRecipeCollapse');
+  if (addRecipeCollapse && window.innerWidth <= 991) {
+    const bsCollapse = new bootstrap.Collapse(addRecipeCollapse, {
+      show: true
+    });
+  }
+
   // Scroll
   document
     .getElementById("addRecipeForm")
@@ -2551,6 +2559,8 @@ function renderUsers(users) {
       } else {
         html += '<button class="btn btn-sm btn-danger" onclick="blockUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')" title="Zablokuj"><i class="bi bi-lock"></i><span class="btn-text">Zablokuj</span></button>';
       }
+      
+      html += '<button class="btn btn-sm btn-outline-danger" onclick="deleteUser(\'' + user.id + '\', \'' + escapeHtml(user.username) + '\')" title="Usuń użytkownika"><i class="bi bi-trash"></i><span class="btn-text">Usuń</span></button>';
       html += '</div>';
     } else {
       html += '<div class="user-actions"><span class="badge bg-light text-muted">To Ty</span></div>';
@@ -2614,6 +2624,38 @@ function unblockUser(userId, username) {
   });
 }
 
+function deleteUser(userId, username) {
+  Swal.fire({
+    title: 'Usunąć użytkownika?',
+    html: 'Czy na pewno chcesz <strong>trwale usunąć</strong> użytkownika <strong>"' + username + '"</strong>?<br><br>' +
+          '<span class="text-danger"><i class="bi bi-exclamation-triangle me-1"></i>Ta operacja jest nieodwracalna!</span><br>' +
+          'Zostaną usunięte:<br>' +
+          '• Wszystkie dane użytkownika<br>' +
+          '• Wszystkie przepisy użytkownika<br>' +
+          '• Historia aktywności',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Tak, usuń!',
+    confirmButtonColor: '#dc3545',
+    cancelButtonText: 'Anuluj',
+    cancelButtonColor: '#6c757d'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.post('config.php', {
+        action: 'delete_user',
+        user_id: userId
+      }, function(data) {
+        if (data.success) {
+          Swal.fire('Usunięto!', data.message, 'success');
+          loadUsers();
+        } else {
+          Swal.fire('Błąd', data.error, 'error');
+        }
+      }, 'json');
+    }
+  });
+}
+
 function changeUserPassword(userId, username) {
   Swal.fire({
     title: 'Zmiana hasła',
@@ -2646,6 +2688,40 @@ function changeUserPassword(userId, username) {
           Swal.fire('Sukces!', 'Hasło zostało zmienione', 'success');
         } else {
           Swal.fire('Błąd', data.error || 'Nie udało się zmienić hasła', 'error');
+        }
+      }, 'json').fail(function() {
+        Swal.fire('Błąd', 'Wystąpił problem z połączeniem', 'error');
+      });
+    }
+  });
+}
+
+function deleteUser(userId, username) {
+  Swal.fire({
+    title: 'Usunąć użytkownika?',
+    html: 'Czy na pewno chcesz <strong>trwale usunąć</strong> użytkownika <strong>"' + username + '"</strong>?<br><br>' +
+          '<span class="text-danger"><i class="bi bi-exclamation-triangle me-1"></i>Ta operacja jest nieodwracalna!</span><br>' +
+          'Zostaną usunięte:<br>' +
+          '• Wszystkie dane użytkownika<br>' +
+          '• Wszystkie przepisy użytkownika<br>' +
+          '• Historia aktywności',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Tak, usuń!',
+    confirmButtonColor: '#dc3545',
+    cancelButtonText: 'Anuluj',
+    cancelButtonColor: '#6c757d'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.post('config.php', {
+        action: 'delete_user',
+        user_id: userId
+      }, function(data) {
+        if (data.success) {
+          Swal.fire('Usunięto!', data.message, 'success');
+          loadUsers();
+        } else {
+          Swal.fire('Błąd', data.error, 'error');
         }
       }, 'json').fail(function() {
         Swal.fire('Błąd', 'Wystąpił problem z połączeniem', 'error');
@@ -2873,8 +2949,10 @@ $('#addUserForm').on('submit', function(e) {
     } else {
       Swal.fire('Błąd', data.error, 'error');
     }
-  }, 'json').fail(function() {
-    Swal.fire('Błąd', 'Wystąpił problem z połączeniem', 'error');
+  }, 'json').fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('AJAX Error:', textStatus, errorThrown);
+    console.error('Response:', jqXHR.responseText);
+    Swal.fire('Błąd', 'Wystąpił problem z połączeniem: ' + textStatus, 'error');
   });
 });
 
